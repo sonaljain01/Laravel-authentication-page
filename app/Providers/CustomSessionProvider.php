@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Services\CustomSessionHandler;
 use App\Services\SessionHandlerInterface;
 use App\Providers\AuthServiceProvider;
@@ -23,8 +23,5 @@ class CustomSessionProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        Session::extends('custom_driver', function ($app) {
-            return new CustomSessionHandler();
-        });
     }
 }

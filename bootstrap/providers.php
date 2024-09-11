@@ -1,7 +1,7 @@
 <?php
 
 return [
-    App\Providers\AppServiceProvider::class,
     App\Providers\AuthServiceProvider::class,
     App\Providers\CustomSessionProvider::class,
+    App\Providers\CustomAuthServiceProvider::class,
 ];
