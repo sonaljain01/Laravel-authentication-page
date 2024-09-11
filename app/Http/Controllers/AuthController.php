@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Facades\CustomAuthFacade;
 
-use validator;
 class AuthController extends Controller
 {
 
@@ -21,7 +21,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
          
-        if(Auth::attempt($credentials)){
+        if(CustomAuthFacade::attempt($credentials)){
             session()->put('custom_message', 'You have logged in successfully!');
             return redirect('home');
         }
@@ -34,7 +34,7 @@ class AuthController extends Controller
 
     public function register(Request $request){
         // dd($request->all());
-        $request->validate([
+        $credentials = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users|email',
             'password' => 'required|confirmed|string|min:8|',
@@ -49,11 +49,11 @@ class AuthController extends Controller
         ]);
 
         // login user after registration
-        if (Auth::attempt($request->only('email', 'password'))) {
+        if (CustomAuthFacade::attempt($credentials)) {
             
             session()->put('custom_message', 'Welcome! Your account has been created successfully.');
 
-            Auth::login($user);
+            CustomAuthFacade::login($user);
             return redirect('home')->withSuccess('Registration successful. Logged in!');
         }
 
@@ -68,7 +68,7 @@ class AuthController extends Controller
     public function logout(){
         
         session()->flush();
-        Auth::logout();
+        CustomAuthFacade::logout();
         
         return redirect('');
     }

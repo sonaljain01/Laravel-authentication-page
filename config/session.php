@@ -18,8 +18,8 @@ return [
     |
     */
 
-    // 'driver' => env('SESSION_DRIVER', 'database'),
-    'driver' => 'CustomSessionProvider',
+    'driver' => env('SESSION_DRIVER', 'database'),
+    // 'driver' => 'CustomSessionProvider',
 
     /*
     |--------------------------------------------------------------------------

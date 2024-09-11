@@ -8,7 +8,7 @@ use App\Models\Connection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\CustomSessionProvider;
-
+use App\Facades\CustomAuthFacade;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
                     $user = User::where('email', $credentials['email'])->first();
                     
                     if ($user && Hash::check($credentials['password'], $user->password)) {
-                        Auth::login($user);
+                        CustomAuthFacade::login($user);
 
                         return true;
                     }
@@ -62,10 +62,12 @@ class AuthServiceProvider extends ServiceProvider
             return new class {
                 public function logout()
                 {
-                    Auth::logout();
+                    CustomAuthFacade::logout();
                     
                 }
             };
         });
+
+        
     }
 }
