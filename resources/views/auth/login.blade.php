@@ -16,6 +16,11 @@
                             <p class='text-success'>{{ Session::get('success') }}</p>
                         @endif
 
+                        {{-- // custom session message --}}
+                        @if(Session::has('custom_message'))
+                            <p class="text-info">{{ Session::get('custom_message') }}</p>
+                        @endif
+
                         <form action = "{{ route('login') }}" method="post">
                             @csrf
                             @method ('post')
