@@ -11,7 +11,7 @@ class CustomAuthService{
     {
         $user = User::where('email', $credentials['email'])->first();
 
-        if ($user && Hash::check($credentials['password'], $user->password)) {
+        if ($user && \Hash::check($credentials['password'], $user->password)) {
             Auth::login($user);
             return true;
         }

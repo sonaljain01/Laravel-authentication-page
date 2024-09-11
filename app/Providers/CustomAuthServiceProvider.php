@@ -12,7 +12,7 @@ class CustomAuthServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('customauth', function(){
+        $this->app->singleton(CustomAuthService::class, function ($app){
             return new CustomAuthService();
         });
     }

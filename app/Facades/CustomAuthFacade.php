@@ -7,6 +7,6 @@ class CustomAuthFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'customauth';
+        return CustomAuthService::class;
     }
 }
