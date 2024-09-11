@@ -21,7 +21,8 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
          
-        if(Auth::attempt($request->only('email', 'password'))){
+        if(Auth::attempt($credentials)){
+            session()->put('custom_message', 'You have logged in successfully!');
             return redirect('home');
         }
         return redirect('login')->withError('Invalid Credentials');
@@ -50,7 +51,9 @@ class AuthController extends Controller
         // login user after registration
         if (Auth::attempt($request->only('email', 'password'))) {
             
+            session()->put('custom_message', 'Welcome! Your account has been created successfully.');
 
+            Auth::login($user);
             return redirect('home')->withSuccess('Registration successful. Logged in!');
         }
 
@@ -64,7 +67,7 @@ class AuthController extends Controller
 
     public function logout(){
         
-        \Session::flush();
+        session()->flush();
         Auth::logout();
         
         return redirect('');
