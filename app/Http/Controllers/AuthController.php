@@ -49,10 +49,11 @@ class AuthController extends Controller
         ]);
 
         // login user after registration
+        // if (CustomAuthFacade::attempt($credentials)) {
         if (CustomAuthFacade::attempt($credentials)) {
-            
             session()->put('custom_message', 'Welcome! Your account has been created successfully.');
-
+            
+        
             CustomAuthFacade::login($user);
             return redirect('home')->withSuccess('Registration successful. Logged in!');
         }
@@ -70,6 +71,6 @@ class AuthController extends Controller
         session()->flush();
         CustomAuthFacade::logout();
         
-        return redirect('');
+        return redirect('')->withsuccess('Logged out successfully');
     }
 }
