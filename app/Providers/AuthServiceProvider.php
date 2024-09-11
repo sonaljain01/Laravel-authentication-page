@@ -7,7 +7,7 @@ use Illuminate\Contracts\Foundation\Application;
 use App\Models\Connection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use App\Providers\CustomSessionProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
