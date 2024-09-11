@@ -9,18 +9,19 @@ use App\Models\User;
 use validator;
 class AuthController extends Controller
 {
+
     public function index()
     {
         return view('auth.login');
     }
 
     public function login(Request $request){
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-         //login code
-        if (\Auth::attempt($request->only('email', 'password'))) {
+         
+        if(Auth::attempt($request->only('email', 'password'))){
             return redirect('home');
         }
         return redirect('login')->withError('Invalid Credentials');
@@ -38,18 +39,19 @@ class AuthController extends Controller
             'password' => 'required|confirmed|string|min:8|',
         ]);
 
-        // //Save in users table
-        User::create([
+        //Save in users table
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => \Hash::make($request->password),
             
         ]);
 
-        // // login user 
+        // login user after registration
         if (Auth::attempt($request->only('email', 'password'))) {
-            // $request->session()->regenerate();
-            return redirect('home');
+            
+
+            return redirect('home')->withSuccess('Registration successful. Logged in!');
         }
 
         return redirect('register')->withError('Login Failed');
@@ -60,8 +62,10 @@ class AuthController extends Controller
     }
 
     public function logout(){
+        
         \Session::flush();
-        \Auth::logout();
+        Auth::logout();
+        
         return redirect('');
     }
 }
